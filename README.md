@@ -90,10 +90,11 @@ are used.
 ## Todos 📝
 
 - [ ] Hooks
-  - [ ] Conventional Commits
-  - [ ] Husky
-  - [ ] Prettier
-  - [ ] ESLint
+  - [x] Commitlint
+  - [x] Husky
+  - [x] Prettier
+  - [x] ESLint
+  - [x] Test
 - [ ] Deployment
   - [ ] Github CI/CD
   - [ ] Docker
