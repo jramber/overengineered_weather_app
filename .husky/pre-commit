@@ -1,6 +1,13 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+cd frontend/
 npx prettier --write "src/**/*.{ts, tsx}"
 npx eslint --fix "src/**/*.{ts, tsx}"
 npm test
+
+cd ../backend/
+
+npx prettier --write "src/**/*.{ts, tsx}"
+npx eslint --fix "src/**/*.{ts, tsx}"
+
