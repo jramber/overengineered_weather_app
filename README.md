@@ -89,7 +89,7 @@ are used.
 
 ## Todos 📝
 
-- [ ] Hooks
+- [x] Hooks
   - [x] Commitlint
   - [x] Husky
   - [x] Prettier
@@ -107,7 +107,7 @@ are used.
   - [ ] Dark Mode
   - [ ] Back-end communication
 - [ ] Back-end
-  - [ ] Server
+  - [x] Server
   - [ ] API integration
 - [ ] Testing
   - [ ] React testing library
