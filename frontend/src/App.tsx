@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 
-// const baseUrl = import.meta.env.VITE_HOST;
+const baseUrl = import.meta.env.VITE_AWS_IP;
 const apiPort = import.meta.env.VITE_API_PORT;
-const apiUrl = `http://localhost:${apiPort}`;
+const apiUrl = `http://${baseUrl}:${apiPort}`;
 
 const instance = axios.create({
   baseURL: apiUrl,
