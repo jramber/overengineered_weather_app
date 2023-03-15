@@ -3,26 +3,26 @@ import React, { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 
-const baseUrl = import.meta.env.VITE_HOST;
-const apiPort = import.meta.env.VITE_API_PORT;
-const apiUrl = `http://${baseUrl}:${apiPort}`;
-
-const instance = axios.create({
-  baseURL: apiUrl,
-});
+// const baseUrl = import.meta.env.VITE_HOST;
+// const apiPort = import.meta.env.VITE_API_PORT;
+// const apiUrl = `http://${baseUrl}:${apiPort}`;
+//
+// const instance = axios.create({
+//   baseURL: apiUrl,
+// });
 
 function App() {
 
   const [count, setCount] = useState(0);
-  const [msg, setMsg] = useState('');
+  // const [msg, setMsg] = useState('');
 
-  React.useEffect(() => {
-    console.log(import.meta.env.BASE_URL);
+  // React.useEffect(() => {
+  //   console.log(import.meta.env.BASE_URL);
 
-    instance.get('/').then( res => {
-      setMsg(res.data);
-    });
-  })
+  //   instance.get('/').then( res => {
+  //     setMsg(res.data);
+  //   });
+  // })
 
   return (
     <div className="App">
@@ -44,7 +44,7 @@ function App() {
         </p>
       </div>
       <p className="read-the-docs">
-        {msg}
+        {/*msg*/}
       </p>
     </div>
   );

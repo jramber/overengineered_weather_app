@@ -5,7 +5,6 @@ services:
       - "3000:3000"
   frontend:
     build: ./frontend
-    hostname: xxx.xxx.xxx.xxx
     ports:
       - "8080:8080"
     expose:
