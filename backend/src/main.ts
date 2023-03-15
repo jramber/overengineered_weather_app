@@ -7,6 +7,6 @@ async function bootstrap() {
     origin: 'http://192.168.0.168:8080',
     methods: 'GET,POST,PUT,PATCH,HEAD,DELETE',
   });
-  await app.listen(3000);
+  await app.listen(3001);
 }
 bootstrap();
