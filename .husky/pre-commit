@@ -1,13 +1,12 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-cd frontend/
+cd frontend/ || return 1
 npx prettier --write "src/**/*.{ts, tsx}"
 npx eslint --fix "src/**/*.{ts, tsx}"
 npm test
 
-cd ../backend/
-
+cd ../backend/ || return 1
 npx prettier --write "src/**/*.{ts, tsx}"
 npx eslint --fix "src/**/*.{ts, tsx}"
 

@@ -1,9 +1,26 @@
-import { useState } from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 
+const baseUrl = import.meta.env.VITE_HOST;
+const apiPort = 3000;
+const apiUrl = `http://${baseUrl}:${apiPort}`;
+
+const instance = axios.create({
+  baseURL: apiUrl,
+});
+
 function App() {
+
   const [count, setCount] = useState(0);
+  const [msg, setMsg] = useState('');
+
+  React.useEffect(() => {
+    instance.get('/').then( res => {
+      setMsg(res.data);
+    });
+  })
 
   return (
     <div className="App">
@@ -25,7 +42,7 @@ function App() {
         </p>
       </div>
       <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+        {msg}
       </p>
     </div>
   );

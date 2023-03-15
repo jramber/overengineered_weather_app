@@ -90,15 +90,15 @@ are used.
 ## Todos 📝
 
 - [x] Hooks
-  - [x] Commitlint
   - [x] Husky
   - [x] Prettier
   - [x] ESLint
   - [x] Test
 - [ ] Deployment
+  - [x] Docker
+  - [x] Docker Compose
   - [ ] Github CI/CD
-  - [ ] Docker
-  - [ ] Railway
+  - [ ] AWS
 - [ ] Front-end
   - [x] App
   - [ ] Figma Mocks

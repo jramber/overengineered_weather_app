@@ -5,5 +5,6 @@ WORKDIR /frontend
 COPY package.json ./
 RUN npm install
 COPY . .
-EXPOSE 5173
+ENV VITE_PORT=8080
+EXPOSE 8080
 CMD ["npm", "run", "dev", "--", "--host"]
