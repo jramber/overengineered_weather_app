@@ -4,7 +4,7 @@ import reactLogo from "./assets/react.svg";
 import "./App.css";
 
 const baseUrl = import.meta.env.VITE_HOST;
-const apiPort = 3000;
+const apiPort = import.meta.env.VITE_API_PORT;
 const apiUrl = `http://${baseUrl}:${apiPort}`;
 
 const instance = axios.create({
@@ -17,6 +17,8 @@ function App() {
   const [msg, setMsg] = useState('');
 
   React.useEffect(() => {
+    console.log(import.meta.env.BASE_URL);
+
     instance.get('/').then( res => {
       setMsg(res.data);
     });

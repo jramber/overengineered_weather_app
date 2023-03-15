@@ -6,5 +6,6 @@ COPY package.json ./
 RUN npm install
 COPY . .
 ENV VITE_PORT=8080
+ENV VITE_API_PORT=8080
 EXPOSE 8080
 CMD ["npm", "run", "dev", "--", "--host"]
