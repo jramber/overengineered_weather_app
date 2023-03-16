@@ -4,6 +4,7 @@ import axios from 'axios';
 import * as dotenv from 'dotenv';
 const router = express.Router();
 
+import { forecast} from './helpers/functions.js';
 import { weatherCodes } from './helpers/weatherCodes.js';
 import { IWeatherResponse} from './types/types.js';
 
@@ -28,6 +29,9 @@ router.get('/', async (req, res) => {
   // ...
 
   let weather_object: IWeatherResponse | undefined;
+
+  const f= await forecast(req.query.lat, req.query.lon);
+  console.log(f);
 
   await instance.get('/forecast', {
     params: {
