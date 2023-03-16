@@ -1,0 +1,13 @@
+name: Build App
+on:
+  push:
+    branches: ["main"]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Remove old docker compose
+        run: sudo docker-compose down
+      - name: Build the new docker compose
+        run: sudo docker-compose build --no-cache && sudo docker-compose up -d
