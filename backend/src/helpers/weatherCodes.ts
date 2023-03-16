@@ -1,4 +1,4 @@
-export const weatherCodes = new Map([
+export const weatherCodes: Map<number, string>= new Map([
   [0, "Clear sky"],
   [1, "Mainly clear"],
   [2, "Partly cloudy"],

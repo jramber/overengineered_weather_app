@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
 import * as dotenv from 'dotenv';
+const router = express.Router();
 
 import { weatherCodes } from './helpers/weatherCodes.js';
 import { IWeatherResponse} from './types/types.js';
@@ -16,13 +17,13 @@ app.use(cors({
   origin: true,
   methods: ['GET', 'POST', 'HEAD', 'OPTIONS', 'PUT', 'PATCH'],
   credentials: true
-}))
+}));
 
 const instance = axios.create({
   baseURL: 'https://api.open-meteo.com/v1'
 });
 
-app.get('/', async (req, res) => {
+router.get('/', async (req, res) => {
   // check if request has lat and lon parameters
   // ...
 
@@ -35,7 +36,7 @@ app.get('/', async (req, res) => {
       current_weather: true
     }
   }).then( response => {
-    const weatherCode = response.data.current_weather.weathercode;
+    const weatherCode: number = response.data.current_weather.weathercode;
     weather_object = {
       weather_message: weatherCodes.get(weatherCode),
       temperature:     response.data.current_weather.temperature,
@@ -51,6 +52,8 @@ app.get('/', async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(weather_object));
 })
+
+app.use('/', router);
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
