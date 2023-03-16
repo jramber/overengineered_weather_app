@@ -1,10 +1,16 @@
-const express = require('express');
-const cors =    require('cors');
-const axios =   require('axios');
-const weatherCodes = require('./weatherCodes.js');
+import express from 'express';
+import cors from 'cors';
+import axios from 'axios';
+import * as dotenv from 'dotenv';
+import { weatherCodes } from './helpers/weatherCodes.js';
+import 'types/types.js'
+import { IWeatherResponse } from '../dist/types/types.js';
 
-const port = 3001
+dotenv.config();
+
+const PORT = process.env.PORT;
 const app = express()
+
 app.use(cors({
   // origin: `http://13.51.36.139/`
   origin: true,
@@ -23,7 +29,7 @@ app.get('/', (req, res) => {
 
 app.get('/:lat/:lon', async (req, res) => {
 
-  let weather_object = {}
+  let weather_object: IWeatherResponse | undefined;
 
   await instance.get('/forecast', {
     params: {
@@ -34,7 +40,7 @@ app.get('/:lat/:lon', async (req, res) => {
   }).then( response => {
     // console.log(response.data);
     const weatherCode = response.data.current_weather.weathercode;
-    weather_object.weather_message = weatherCodes.getWeatherMsg(weatherCode);;
+    weather_object.weather_message = weatherCodes.get(weatherCode);
     weather_object.temperature     = response.data.current_weather.temperature;
     weather_object.wind_speed      = response.data.current_weather.windspeed;
     weather_object.wind_direction  = response.data.current_weather.winddirection;
@@ -45,6 +51,6 @@ app.get('/:lat/:lon', async (req, res) => {
   // res.send(`Your latitude is: ${req.params.lat}, and your longitude is: ${req.params.lon}`);
 })
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});

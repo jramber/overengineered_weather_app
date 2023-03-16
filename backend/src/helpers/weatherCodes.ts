@@ -1,4 +1,4 @@
-const weatherCodes = new Map([
+export const weatherCodes = new Map([
   [0, "Clear sky"],
   [1, "Mainly clear"],
   [2, "Partly cloudy"],
@@ -27,6 +27,6 @@ const weatherCodes = new Map([
   [99, "Heavy hail"]
 ]);
 
-const getWeatherMsg = code => weatherCodes.get(code);
-
-module.exports = { getWeatherMsg }
+// const getWeatherMsg = code => weatherCodes.get(code);
+//
+// module.exports = { getWeatherMsg }
