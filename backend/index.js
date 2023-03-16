@@ -3,7 +3,10 @@ const cors = require('cors')
 
 const app = express()
 app.use(cors({
-  origin: `http://13.51.36.139/`
+  // origin: `http://13.51.36.139/`
+  origin: true,
+  methods: ['GET', 'POST', 'HEAD', 'OPTIONS', 'PUT', 'PATCH'],
+  credentials: true
 }))
 
 
