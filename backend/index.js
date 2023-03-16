@@ -1,6 +1,13 @@
 const express = require('express')
+const cors = require('cors')
+
 const app = express()
-const port = 3000
+app.use(cors({
+  origin: `http://13.51.36.139/`
+}))
+
+
+const port = 3001
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
