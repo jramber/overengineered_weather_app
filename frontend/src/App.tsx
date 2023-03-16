@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 // import reactLogo from "./assets/react.svg";
-import "./App.css";
+// import "./App.css";
 
 const baseUrl = import.meta.env.VITE_AWS_IP;
 const apiPort = import.meta.env.VITE_API_PORT;
@@ -11,8 +11,15 @@ const instance = axios.create({
   withCredentials: true
 });
 
+interface weatherRes {
+  weather_message: string,
+  temperature: number,
+  wind_speed: number,
+  wind_direction: number
+}
+
 function App() {
-  const [msg, setMsg] = useState('');
+  const [weather, setWeather] = useState(<div /> );
 
   React.useEffect(() => {
     // default position -> madrid
@@ -27,16 +34,22 @@ function App() {
     }
 
     instance.get(`/${lat}/${lon}`).then( res => {
-      setMsg(res.data);
+      const data: weatherRes = res.data;
+      const properties = <>
+        <p>{data.weather_message}</p>
+        <p>temperature: {data.temperature}</p>
+        <p>Wind Speed: {data.wind_speed}</p>
+        <p>Wind direction: {data.wind_direction}</p>
+      </>;
+      setWeather(properties);
     });
   })
+
 
   return (
     <div className="App">
       <h1 className="text-3xl font-bold">Sunny</h1>
-      <p className="">
-        {msg}
-      </p>
+      {weather}
     </div>
   );
 }
