@@ -9,6 +9,7 @@ const apiUrl = `http://${baseUrl}:${apiPort}`;
 
 const instance = axios.create({
   baseURL: apiUrl,
+  withCredentials: true
 });
 
 function App() {
