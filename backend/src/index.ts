@@ -2,9 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
 import * as dotenv from 'dotenv';
+
 import { weatherCodes } from './helpers/weatherCodes.js';
-import 'types/types.js'
-import { IWeatherResponse } from '../dist/types/types.js';
+import { IWeatherResponse} from './types/types.js';
 
 dotenv.config();
 
@@ -18,37 +18,38 @@ app.use(cors({
   credentials: true
 }))
 
-
 const instance = axios.create({
   baseURL: 'https://api.open-meteo.com/v1'
 });
 
-app.get('/', (req, res) => {
-  res.send('This application is under development');
-})
-
-app.get('/:lat/:lon', async (req, res) => {
+app.get('/', async (req, res) => {
+  // check if request has lat and lon parameters
+  // ...
 
   let weather_object: IWeatherResponse | undefined;
 
   await instance.get('/forecast', {
     params: {
-      latitude: 40.4165,
-      longitude: -3.70256,
+      latitude: req.query.lat,
+      longitude: req.query.lon,
       current_weather: true
     }
   }).then( response => {
-    // console.log(response.data);
     const weatherCode = response.data.current_weather.weathercode;
-    weather_object.weather_message = weatherCodes.get(weatherCode);
-    weather_object.temperature     = response.data.current_weather.temperature;
-    weather_object.wind_speed      = response.data.current_weather.windspeed;
-    weather_object.wind_direction  = response.data.current_weather.winddirection;
+    weather_object = {
+      weather_message: weatherCodes.get(weatherCode),
+      temperature:     response.data.current_weather.temperature,
+      wind_speed:      response.data.current_weather.windspeed,
+      wind_direction:  response.data.current_weather.winddirection
+    }
   })
+
+  if (!weatherCodes) {
+    res.sendStatus(404);
+  }
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(weather_object));
-  // res.send(`Your latitude is: ${req.params.lat}, and your longitude is: ${req.params.lon}`);
 })
 
 app.listen(PORT, () => {

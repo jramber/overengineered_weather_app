@@ -33,7 +33,13 @@ function App() {
       })
     }
 
-    instance.get(`/${lat}/${lon}`).then( res => {
+    // instance.get(`/${lat}/${lon}`).then( res => {
+    instance.get(`/`, {
+      params: {
+        lat: lat,
+        lon: lon
+      }
+    }).then( res => {
       const data: weatherRes = res.data;
       const properties = <>
         <p>{data.weather_message}</p>
