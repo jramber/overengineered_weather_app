@@ -6,7 +6,7 @@ const Axios = axios.create({
   baseURL: 'https://api.open-meteo.com/v1'
 });
 
-export const forecast = async (latitude, longitude) => {
+export const request_forecast = async (latitude, longitude) => {
   // let weather: IWeatherResponse | undefined;
   let forecast: IForecast[] = [];
 

@@ -20,6 +20,7 @@ interface weatherRes {
 
 function App() {
   const [weather, setWeather] = useState(<div /> );
+  const [forecast, setForecast] = useState([<div/>]);
 
   React.useEffect(() => {
     // default position -> madrid
@@ -49,13 +50,39 @@ function App() {
       </>;
       setWeather(properties);
     });
-  })
+
+    instance.get('/forecast', {
+      params: {
+        lat: lat,
+        lon: lon
+      }
+    }).then(response => {
+      // console.log(response.data);
+      let days = [];
+      for(let i = 0; i < response.data.length; i++) {
+        console.log(response.data[i]);
+        const day = <div key={response.data[i].day}>
+          <p>Date: {response.data[i].day}</p>
+          <p>Max Temp: {response.data[i].max_temp}</p>
+          <p>Min Temp: {response.data[i].min_temp}</p>
+          <p>Rain prov: {response.data[i].precipitation_probability}%</p>
+          <br/>
+        </div>
+
+        days.push(day);
+      }
+
+      setForecast(days);
+    });
+  }, [])
 
 
   return (
     <div className="App">
       <h1 className="text-3xl font-bold">Weather App</h1>
       {weather}
+      <br/>
+      {forecast}
     </div>
   );
 }
