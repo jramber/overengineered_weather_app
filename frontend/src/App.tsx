@@ -80,7 +80,10 @@ function App() {
       {weather}
       <br/>
       <div className="flex flex-col gap-2">
-        {forecastDays}
+        <p className="text-gray-400 text-sm">Forecast (7 days)</p>
+        <div className="flex flex-col gap-2">
+          {forecastDays}
+        </div>
       </div>
     </div>
   );
