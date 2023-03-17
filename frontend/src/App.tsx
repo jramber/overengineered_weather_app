@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
+import Forecast from './components/Forecast/Forecast';
+import { IForecastResponseElement } from './types/types';
 // import reactLogo from "./assets/react.svg";
 // import "./App.css";
 
@@ -20,7 +22,7 @@ interface weatherRes {
 
 function App() {
   const [weather, setWeather] = useState(<div /> );
-  const [forecast, setForecast] = useState([<div/>]);
+  const [forecastDays, setForecastDays] = useState([<div/>]);
 
   React.useEffect(() => {
     // default position -> madrid
@@ -41,7 +43,6 @@ function App() {
         lon: lon
       }
     }).then( res => {
-      console.log(res.data);
       const data: weatherRes = res.data;
       const properties = <>
         <p>{data.weather_message}</p>
@@ -58,29 +59,29 @@ function App() {
         lon: lon
       }
     }).then(response => {
-      let days = [];
-      for(let i = 0; i < response.data.length; i++) {
-        const day = <div key={response.data[i].day}>
-          <p>Date: {response.data[i].day}</p>
-          <p>Max Temp: {response.data[i].max_temp}</p>
-          <p>Min Temp: {response.data[i].min_temp}</p>
-          <p>Rain prov: {response.data[i].precipitation_probability}%</p>
-          <br/>
-        </div>
-        days.push(day);
+      const data: IForecastResponseElement[] = response.data;
+      let forecast: JSX.Element[] = [];
+      for(let i = 0; i < data.length; i++) {
+        forecast.push(<Forecast
+          key={data[i].day}
+          date={data[i].day}
+          max_temp={data[i].max_temp}
+          min_temp={data[i].min_temp}
+          weather_code={data[i].weather_code}
+        />)
       }
-
-      setForecast(days);
+      setForecastDays(forecast);
     });
   }, [])
 
 
   return (
-    <div className="App">
-      <h1 className="text-3xl font-bold">Weather App</h1>
+    <div className="App p-6 bg-slate-100">
       {weather}
       <br/>
-      {forecast}
+      <div className="flex flex-col gap-2">
+        {forecastDays}
+      </div>
     </div>
   );
 }

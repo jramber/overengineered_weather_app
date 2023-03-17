@@ -10,36 +10,31 @@ import {
 } from './types.js';
 import { weatherCodes } from './weatherCodes.js';
 
-
 const Axios = axios.create({
   baseURL: 'https://api.open-meteo.com/v1'
 });
 
 export const request_forecast = async (latitude, longitude) => {
-  // let weather: IWeatherResponse | undefined;
   let forecast: IForecast[] = [];
-
   await Axios.get('forecast', {
     params: {
       latitude: latitude,
       longitude: longitude,
       forecast_days: 7,
       timezone: 'GMT',
-      daily: 'temperature_2m_max,temperature_2m_min,precipitation_probability_mean'
+      daily: 'temperature_2m_max,temperature_2m_min,weathercode'
     }
   }).then( response => {
     const data: IForecastRes = response.data;
-
     for(let i = 0; i < 7; i++) {
       forecast.push({
         day: data.daily.time[i],
         max_temp: data.daily.temperature_2m_max[i],
         min_temp: data.daily.temperature_2m_min[i],
-        precipitation_probability: data.daily.precipitation_probability_mean[i]
+        weather_code:  data.daily.weathercode[i]
       });
     }
   });
-
   return forecast;
 }
 
@@ -73,5 +68,3 @@ export const request_todays_weather = async (latitude: string, longitude: string
     return Err('Bad request');
   return Ok(weather);
 }
-
-

@@ -5,7 +5,11 @@ module.exports = {
     "./src/**/*.{ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        'weather': '50px 1fr 100px'
+      }
+    },
   },
   plugins: [],
 }

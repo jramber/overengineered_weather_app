@@ -27,13 +27,13 @@ export interface IForecastRes {
     time: string,
     temperature_2m_max: string,
     temperature_2m_min: string,
-    precipitation_probability_mean: string
+    weathercode: string
   },
   daily: {
     time: string[],
     temperature_2m_max: number[],
     temperature_2m_min: number[],
-    precipitation_probability_mean: number[]
+    weathercode: number[]
   }
 }
 
@@ -41,7 +41,7 @@ export interface IForecast {
   day: string,
   max_temp: number,
   min_temp: number,
-  precipitation_probability: number
+  weather_code: number
 }
 
 export interface ITodayWeatherReq {
@@ -82,3 +82,4 @@ export interface ITodayWeather {
   wind_speed: number,
   wind_direction: number
 }
+
