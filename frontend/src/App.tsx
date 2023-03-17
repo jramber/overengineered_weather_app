@@ -79,6 +79,12 @@ function App() {
     <div className="App p-6 bg-slate-100">
       {weather}
       <br/>
+      <div className="gap-2 grid grid-flow-col overflow-x-auto overscroll-x-contain">
+       <div className="bg-black w-32 h-32"></div>
+        <div className="bg-black w-32 h-32"></div>
+        <div className="bg-black w-32 h-32"></div>
+      </div>
+      <br/>
       <div className="flex flex-col gap-2">
         <p className="text-gray-400 text-sm">Forecast (7 days)</p>
         <div className="flex flex-col gap-2">
