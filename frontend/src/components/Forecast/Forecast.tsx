@@ -16,7 +16,7 @@ export default function Forecast({ date, max_temp, min_temp, weather_code}: IFor
 
   useEffect(() => {
     const parsedDate: number[] = parseDate(date)
-    let dateObj = new Date(parsedDate[0],parsedDate[1],parsedDate[2]);
+    let dateObj = new Date(parsedDate[0],parsedDate[1] - 1,parsedDate[2]);
     setWeekday(getWeekDay(dateObj.getDay()));
     setIcon(getWeatherIcon(weather_code));
     setMaxTemp(max_temp);
