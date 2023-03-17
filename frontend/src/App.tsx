@@ -41,6 +41,7 @@ function App() {
         lon: lon
       }
     }).then( res => {
+      console.log(res.data);
       const data: weatherRes = res.data;
       const properties = <>
         <p>{data.weather_message}</p>
@@ -57,10 +58,8 @@ function App() {
         lon: lon
       }
     }).then(response => {
-      // console.log(response.data);
       let days = [];
       for(let i = 0; i < response.data.length; i++) {
-        console.log(response.data[i]);
         const day = <div key={response.data[i].day}>
           <p>Date: {response.data[i].day}</p>
           <p>Max Temp: {response.data[i].max_temp}</p>
@@ -68,7 +67,6 @@ function App() {
           <p>Rain prov: {response.data[i].precipitation_probability}%</p>
           <br/>
         </div>
-
         days.push(day);
       }
 

@@ -4,9 +4,9 @@ import axios from 'axios';
 import * as dotenv from 'dotenv';
 const router = express.Router();
 
-import { request_forecast } from './helpers/functions.js';
-import { weatherCodes } from './helpers/weatherCodes.js';
-import { IWeatherResponse} from './types/types.js';
+import { request_forecast, request_todays_weather } from './weather/functions.js';
+import { weatherCodes } from './weather/weatherCodes.js';
+import { IForecast, ITodayWeather, IWeatherResponse, Result } from './weather/types.js';
 
 dotenv.config();
 
@@ -20,42 +20,22 @@ app.use(cors({
   credentials: true
 }));
 
-const instance = axios.create({
-  baseURL: 'https://api.open-meteo.com/v1'
-});
-
 router.get('/', async (req, res) => {
   // check if request has lat and lon parameters
   // ...
-
-  let weather_object: IWeatherResponse | undefined;
-
-  await instance.get('/forecast', {
-    params: {
-      latitude: req.query.lat,
-      longitude: req.query.lon,
-      current_weather: true
-    }
-  }).then( response => {
-    const weatherCode: number = response.data.current_weather.weathercode;
-    weather_object = {
-      weather_message: weatherCodes.get(weatherCode),
-      temperature:     response.data.current_weather.temperature,
-      wind_speed:      response.data.current_weather.windspeed,
-      wind_direction:  response.data.current_weather.winddirection
-    }
-  })
-
-  if (!weatherCodes) {
-    res.sendStatus(404);
+  const result: Result<ITodayWeather, string> = await request_todays_weather(req.query.lat, req.query.lon);
+  if(result.ok == false){ // => !result.ok
+    res.status(400);
+    res.send(result.err);
+  } else {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(result.data));
   }
-
-  res.setHeader('Content-Type', 'application/json');
-  res.end(JSON.stringify(weather_object));
 });
 
 router.get('/forecast', async (req, res) => {
-  const forecast = await request_forecast(req.query.lat, req.query.lon);
+  const forecast: IForecast[] = await request_forecast(req.query.lat, req.query.lon);
+
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(forecast));
 });
