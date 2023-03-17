@@ -11,7 +11,14 @@ export const getWeatherIcon = (iconCode: number): JSX.Element => {
   return <div />
 }
 
-export const parseDate = (date: string): string[] => date.split('-');
+export const parseDate = (date: string): number[] => {
+  let strs = date.split('-');
+  let parsedDate = [];
+  for(let i = 0; i < strs.length; i++) {
+    parsedDate.push(Number(strs[i]));
+  }
+  return parsedDate;
+}
 
 export const getWeekDay = (day: number): string => {
   if (day === 0) return 'SUN';
