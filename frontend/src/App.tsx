@@ -1,102 +1,32 @@
-import axios from "axios";
-import React, { useEffect, useState } from 'react';
-import Forecast from './components/Forecast/Forecast';
-import { IForecastResponseElement } from './types/types';
-// import reactLogo from "./assets/react.svg";
-// import "./App.css";
+import React, { Suspense } from 'react';
+import { request_weather } from './api/api.js';
+import ForecastContainer from './components/Forecast/ForecastContainer';
+import { IWeather } from './types/types';
 
-const baseUrl = import.meta.env.VITE_AWS_IP;
-const apiPort = import.meta.env.VITE_API_PORT;
-const apiUrl = `http://${baseUrl}:${apiPort}`;
-const instance = axios.create({
-  baseURL: apiUrl,
-  withCredentials: true
-});
-
-interface weatherRes {
-  weather_message: string,
-  temperature: number,
-  wind_speed: number,
-  wind_direction: number
-}
+// render-as-you-fetch
+const dataReq = request_weather();
 
 function App() {
-  const [weather, setWeather] = useState(<div /> );
-  const [forecastDays, setForecastDays] = useState([<div/>]);
-
-  const [lat, setLat] = useState(0);
-  const [lon, setLon] = useState(0)
-
-  React.useEffect(() => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(position => {
-        setLat(position.coords.latitude);
-        setLon(position.coords.longitude);
-      });
-    } else {
-      // default coordinates -> Madrid, Spain
-      setLat(40.4165);
-      setLon(-3.70256);
-    }
-
-    // skip first iteration
-    if(lat != 0 && lon != 0) {
-      instance.get(`/`, {
-        params: {
-          lat: lat,
-          lon: lon
-        }
-      }).then( res => {
-        const data: weatherRes = res.data;
-        console.log(res.data);
-        // const properties = <>
-        //   <p>{data.weather_message}</p>
-        //   <p>temperature: {data.temperature}</p>
-        //   <p>Wind Speed: {data.wind_speed}</p>
-        //   <p>Wind direction: {data.wind_direction}</p>
-        // </>;
-        // setWeather(properties);
-      });
-    }
-
-    // instance.get('/forecast', {
-    //   params: {
-    //     lat: lat,
-    //     lon: lon
-    //   }
-    // }).then(response => {
-    //   const data: IForecastResponseElement[] = response.data;
-    //   let forecast: JSX.Element[] = [];
-    //   for(let i = 0; i < data.length; i++) {
-    //     forecast.push(<Forecast
-    //       key={data[i].day}
-    //       date={data[i].day}
-    //       max_temp={data[i].max_temp}
-    //       min_temp={data[i].min_temp}
-    //       weather_code={data[i].weather_code}
-    //     />)
-    //   }
-    //   setForecastDays(forecast);
-    // });
-  }, [lat, lon])
-
+  const data: IWeather = dataReq.read();
+  console.log(data);
 
   return (
-    <div className="App p-6 bg-slate-100">
-      {weather}
+    <div className="App min-h-screen p-6 bg-slate-100 flex flex-col gap-2">
+      {/*<Suspense fallback={<div>Loading...</div>}>
+        {weather}
+      </Suspense>*/}
       <br/>
+      {/* HOURLY FORECAST */}
       <div className="gap-2 grid grid-flow-col overflow-x-auto overscroll-x-contain">
        <div className="bg-black w-32 h-32"></div>
         <div className="bg-black w-32 h-32"></div>
         <div className="bg-black w-32 h-32"></div>
       </div>
-      <br/>
-      <div className="flex flex-col gap-2">
-        <p className="text-gray-400 text-sm">Forecast (7 days)</p>
-        <div className="flex flex-col gap-2">
-          {forecastDays}
-        </div>
-      </div>
+
+      {/* DAILY FORECAST */}
+      <Suspense fallback={<div>Loading</div>}>
+        <ForecastContainer forecasts={data.days_forecast}/>
+      </Suspense>
     </div>
   );
 }

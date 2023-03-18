@@ -124,7 +124,6 @@ export interface IHourlyForecast {
   temperature: number
 }
 
-// extend
 export interface IWeather extends ICurrentWeather {
   city: string,
   hour_forecast: IHourlyForecast[],
