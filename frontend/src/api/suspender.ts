@@ -1,23 +1,24 @@
-export const getSuspender = (promise: Promise<any>) => {
-  let status = "pending";
-  let response: any;
+/* eslint-disable */
+export const getSuspender = <T>(promise: Promise<T>): { read: () => T } => {
+  let status: string = 'pending';
+  let response: T;
 
   const suspender = promise.then(
-    res => {
-      status = "success";
+    (res: T) => {
+      status = 'success';
       response = res;
     },
-    err => {
-      status = "error";
+    (err) => {
+      status = 'error';
       response = err;
-    }
+    },
   );
 
-  const read = () => {
+  const read = (): T => {
     switch (status) {
-      case "pending":
+      case 'pending':
         throw suspender;
-      case "error":
+      case 'error':
         throw response;
       default:
         return response;
@@ -26,3 +27,4 @@ export const getSuspender = (promise: Promise<any>) => {
 
   return { read };
 };
+/* eslint-enable */

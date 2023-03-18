@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
-import { request_weather } from './api/api.js';
+import { requestWeather } from './api/api.js';
 import ForecastContainer from './components/Forecast/ForecastContainer';
 import { IWeather } from './types/types';
 
 // render-as-you-fetch
-const dataReq = request_weather();
+const dataReq = requestWeather();
 
 function App() {
   const data: IWeather = dataReq.read();
