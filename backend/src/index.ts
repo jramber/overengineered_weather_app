@@ -4,9 +4,8 @@ import axios from 'axios';
 import * as dotenv from 'dotenv';
 const router = express.Router();
 
-import { request_city_name, request_forecast, request_weather } from './weather/functions.js';
-import { weatherCodes } from './weather/weatherCodes.js';
-import { IForecast, ITodayWeather, IWeatherResponse, Result } from './weather/types.js';
+import { req_weather } from './weather/functions.js';
+import { IWeather, Result } from './weather/types.js';
 
 dotenv.config();
 
@@ -21,47 +20,22 @@ app.use(cors({
 }));
 
 router.get('/', async (req, res) => {
+  // check if the request has the required parameters
   if(!req.query.hasOwnProperty('lat') || !req.query.hasOwnProperty('lon')) {
     res.status(400);
     res.send('Request missing latitude or longitude parameters');
     return;
   }
 
-  // Request city name
-  const resultCity = await request_city_name(req.query.lat, req.query.lon);
-  if(resultCity.ok == false) {
+  const weatherResult: Result<IWeather, string> = await req_weather(req.query.lat, req.query.lon);
+  if(weatherResult.ok == false){
     res.status(400);
-    res.send(resultCity.err);
+    res.send(weatherResult.err);
     return;
   }
-  console.log(resultCity.data);
 
-  const resultWeather: Result<ITodayWeather, string> = await request_weather(req.query.lat, req.query.lon);
-  if(resultWeather.ok == false){ // => !result.ok
-    res.status(400);
-    res.send(resultWeather.err);
-    return;
-  }
-  console.log(resultWeather.data);
-
-  const resultForecast: Result<IForecast[], string> = await request_forecast(req.query.lat, req.query.lon);
-  if(resultForecast.ok == false){ // => !result.ok
-    res.status(400);
-    res.send(resultForecast.err);
-    return;
-  }
-  console.log(resultForecast.data)
-
-  // res.setHeader('Content-Type', 'application/json');
-  // res.end(JSON.stringify(result.data));
-});
-
-router.get('/forecast', async (req, res) => {
-  //const forecast: IForecast[] = await request_forecast(req.query.lat, req.query.lon);
-
-  // res.setHeader('Content-Type', 'application/json');
-  // res.end(JSON.stringify(forecast));
-  res.end(JSON.stringify([]));
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify(weatherResult.data));
 });
 
 router.get('/search', async (req, res) => {
