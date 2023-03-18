@@ -97,7 +97,7 @@ const createForecastObj = (day: string, max_temp: number, min_temp: number, weat
   weather_code
 })
 
-export const request_forecast = async (latitude, longitude): Promise<Result<IForecast[], string>> => {
+export const request_forecast = async (latitude: string, longitude: string): Promise<Result<IForecast[], string>> => {
   let forecast: IForecast[] = [];
   await Axios.get('/forecast', {
     params: {
@@ -130,7 +130,7 @@ const createHourlyForecastObj = (time: string, temperature: number, weather_code
   weather_code
 });
 
-export const request_hourly_forecast = async (latitude, longitude): Promise<Result<IHourlyForecast[], string>> => {
+export const request_hourly_forecast = async (latitude: string, longitude: string): Promise<Result<IHourlyForecast[], string>> => {
   let hourly_forecast: IHourlyForecast[] = [];
   const now = new Date(Date.now());
 
@@ -180,7 +180,7 @@ export const request_hourly_forecast = async (latitude, longitude): Promise<Resu
   return Ok(hourly_forecast);
 }
 
-export const req_weather = async (latitude, longitude): Promise<Result<IWeather, string>> => {
+export const req_weather = async (latitude: string, longitude: string): Promise<Result<IWeather, string>> => {
   // request city name
   const cityNameResult: Result<string, string> =  await request_city_name(latitude, longitude);
   if(cityNameResult.ok == false)
@@ -213,3 +213,77 @@ export const req_weather = async (latitude, longitude): Promise<Result<IWeather,
   });
 }
 
+
+// location api
+const AxiosLocation = axios.create({
+  baseURL: 'https://geocoding-api.open-meteo.com/v1'
+});
+
+export interface ILocationRes {
+  results?: {
+    id: number,
+    name: string,
+    latitude: number,
+    longitude: number,
+    elevation: number,
+    feature_code: string,
+    country_code: string,
+    admin1_id: number,
+    admin2_id: number,
+    admin3_id: number,
+    timezone: string,
+    population: number,
+    postcodes: string[],
+    country_id: number,
+    country: string,
+    admin1: string,
+    admin2: string,
+    admin3: string
+  }[],
+  generationtime_ms: number
+}
+
+export interface ILocation {
+  name: string,
+  country: string
+  latitude: number,
+  longitude: number
+}
+
+const createLocationObj = (name: string, country: string, latitude: number, longitude: number):ILocation => ({
+    name,
+    country,
+    latitude,
+    longitude
+})
+
+export const request_location_info = async (query: string): Promise<Result<ILocation[], string>> => {
+  let locations: ILocation[] = [];
+  let err: string | undefined;
+
+  await AxiosLocation.get('/search', {
+    params: {
+      name: query
+    }
+  }).then(response => {
+    const data: ILocationRes = response.data;
+    if(data.results === undefined) {
+      err = 'The location provided do not match any real location.'
+      return;
+    }
+
+    for(let i = 0; i < data.results.length; i++) {
+      locations.push(createLocationObj(
+        data.results[i].name,
+        data.results[i].country,
+        data.results[i].latitude,
+        data.results[i].longitude
+      ));
+    }
+  });
+  // add catch
+
+  if(err !== undefined)     return Err(err);
+  if(locations.length == 0) return Err('No results for the provided location');
+  return Ok(locations);
+}
