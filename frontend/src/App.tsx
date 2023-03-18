@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import Forecast from './components/Forecast/Forecast';
 import { IForecastResponseElement } from './types/types';
 // import reactLogo from "./assets/react.svg";
@@ -24,55 +24,61 @@ function App() {
   const [weather, setWeather] = useState(<div /> );
   const [forecastDays, setForecastDays] = useState([<div/>]);
 
-  React.useEffect(() => {
-    // default position -> madrid
-    let lat = 40.4165;
-    let lon = -3.70256;
+  const [lat, setLat] = useState(0);
+  const [lon, setLon] = useState(0)
 
+  React.useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(position => {
-        lat = position.coords.latitude;
-        lon = position.coords.longitude;
-      })
+        setLat(position.coords.latitude);
+        setLon(position.coords.longitude);
+      });
+    } else {
+      // default coordinates -> Madrid, Spain
+      setLat(40.4165);
+      setLon(-3.70256);
     }
 
-    // instance.get(`/${lat}/${lon}`).then( res => {
-    instance.get(`/`, {
-      params: {
-        lat: lat,
-        lon: lon
-      }
-    }).then( res => {
-      const data: weatherRes = res.data;
-      const properties = <>
-        <p>{data.weather_message}</p>
-        <p>temperature: {data.temperature}</p>
-        <p>Wind Speed: {data.wind_speed}</p>
-        <p>Wind direction: {data.wind_direction}</p>
-      </>;
-      setWeather(properties);
-    });
+    // skip first iteration
+    if(lat != 0 && lon != 0) {
+      instance.get(`/`, {
+        params: {
+          lat: lat,
+          lon: lon
+        }
+      }).then( res => {
+        const data: weatherRes = res.data;
+        console.log(res.data);
+        // const properties = <>
+        //   <p>{data.weather_message}</p>
+        //   <p>temperature: {data.temperature}</p>
+        //   <p>Wind Speed: {data.wind_speed}</p>
+        //   <p>Wind direction: {data.wind_direction}</p>
+        // </>;
+        // setWeather(properties);
+      });
+    }
 
-    instance.get('/forecast', {
-      params: {
-        lat: lat,
-        lon: lon
-      }
-    }).then(response => {
-      const data: IForecastResponseElement[] = response.data;
-      let forecast: JSX.Element[] = [];
-      for(let i = 0; i < data.length; i++) {
-        forecast.push(<Forecast
-          key={data[i].day}
-          date={data[i].day}
-          max_temp={data[i].max_temp}
-          min_temp={data[i].min_temp}
-          weather_code={data[i].weather_code}
-        />)
-      }
-      setForecastDays(forecast);
-    });
-  }, [])
+    // instance.get('/forecast', {
+    //   params: {
+    //     lat: lat,
+    //     lon: lon
+    //   }
+    // }).then(response => {
+    //   const data: IForecastResponseElement[] = response.data;
+    //   let forecast: JSX.Element[] = [];
+    //   for(let i = 0; i < data.length; i++) {
+    //     forecast.push(<Forecast
+    //       key={data[i].day}
+    //       date={data[i].day}
+    //       max_temp={data[i].max_temp}
+    //       min_temp={data[i].min_temp}
+    //       weather_code={data[i].weather_code}
+    //     />)
+    //   }
+    //   setForecastDays(forecast);
+    // });
+  }, [lat, lon])
 
 
   return (

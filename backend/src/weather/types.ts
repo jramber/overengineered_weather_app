@@ -75,6 +75,7 @@ export interface ITodayWeatherReq {
 
 export interface ITodayWeather {
   weather_msg: string,
+  weather_code: number,
   temp: number,
   max_temp: number
   min_temp: number,
@@ -82,4 +83,5 @@ export interface ITodayWeather {
   wind_speed: number,
   wind_direction: number
 }
+
 
