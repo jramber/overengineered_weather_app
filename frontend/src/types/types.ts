@@ -36,3 +36,12 @@ export interface IWeather extends ICurrentWeather {
   hour_forecast: IHourlyForecast[];
   days_forecast: IForecast[];
 }
+
+export interface IMainWeather {
+  city: string,
+  temp: number,
+  max_temp: number,
+  min_temp: number,
+  weather_code: number,
+  weather_msg: string
+}

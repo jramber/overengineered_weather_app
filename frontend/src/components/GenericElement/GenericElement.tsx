@@ -47,11 +47,11 @@ export default function GenericElement ({ title, component}: { title: string, co
     <div ref={parentElementRef} className="rounded-md relative flex flex-col justify-end">
       <div ref={elementRef} className="relative rounded-md overflow-y-hidden flex flex-col justify-end">
         {/* title */}
-        <div ref={titleRef} className="bg-slate-100 w-full absolute top-0 z-50 p-2">
-          <span className="text-slate-500">{title}</span>
+        <div ref={titleRef} className="bg-gray-100 w-full absolute top-0 z-50 p-2">
+          <span className="text-gray-500">{title}</span>
         </div>
         {/* content */}
-        <div ref={contentRef} className="bg-slate-100 w-full z-10 mt-8">
+        <div ref={contentRef} className="w-full z-10 mt-8">
           {component}
         </div>
       </div>
