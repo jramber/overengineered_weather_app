@@ -15,8 +15,8 @@ jobs:
         working-directory: ./backend
         run: npm install
       - name: Create .env file
-        working-directory: ./backend
         uses: SpicyPizza/create-envfile@v1
+        working-directory: ./backend
         with:
           envkey_PORT: 3001
           envkey_CERT_PATH: /etc/letsencrypt/live/
