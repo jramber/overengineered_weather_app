@@ -9,6 +9,7 @@ import HeaderColors from './components/HeaderColors/HeaderColors';
 import AmbientTemp from './components/AmbientTemp/AmbientTemp';
 import UVIndex from './components/UVIndex/UVIndex';
 import Precipitation from './components/Precipitation/Precipitation';
+import Wind from './components/Wind/Wind';
 
 // render-as-you-fetch
 const dataReq = requestWeather();
@@ -51,6 +52,8 @@ function App() {
         <AmbientTemp temperature={data.apparent_temperature} />
         <UVIndex uvindex={data.uv_index_max} />
         <Precipitation precipitation={data.precipitation_sum} />
+        {/*<Wind windSpeed={data.wind_speed} windDirection={data.wind_direction} />*/}
+        <Wind windSpeed={data.wind_speed} windDirection={300} />
       </div>
     </div>
   );

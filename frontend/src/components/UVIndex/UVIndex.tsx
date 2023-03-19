@@ -21,7 +21,7 @@ export default function UVIndex ({ uvindex }: { uvindex: number }) {
       title={"UV index"}
       isGridComp={true}
       component={
-        <div className="flex flex-col gap-4 p-2">
+        <div className="h-24 flex flex-col justify-between p-2">
           <span className="text-4xl">{uvindex}</span>
           <span>{message}</span>
         </div>

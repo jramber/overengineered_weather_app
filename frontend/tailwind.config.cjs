@@ -21,6 +21,15 @@ module.exports = {
         'secondLeft': '-150px',
         '128': '42rem'
       },
+      colors: {
+        'light-grey': '#EBEBEB'
+      },
+      rotate: {
+        'minus-45': '-45deg',
+        'minus-90': '-90deg',
+        'minus-135': '-135deg',
+        'minus-225': '-225deg'
+      }
     },
   },
   plugins: [],

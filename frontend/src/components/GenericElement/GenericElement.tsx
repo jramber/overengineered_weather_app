@@ -47,7 +47,7 @@ export default function GenericElement ({ title, component, isGridComp }: { titl
 
   function Title ({ isGridComp }: { isGridComp: boolean | undefined } ) {
     if(isGridComp)
-      return (<div ref={titleRef} className="bg-gray-200 w-full absolute top-0 z-50 p-2">
+      return (<div ref={titleRef} className="bg-light-grey w-full absolute top-0 z-50 p-2">
         <span className="text-gray-500">{title}</span>
       </div>)
     // default
@@ -62,7 +62,7 @@ export default function GenericElement ({ title, component, isGridComp }: { titl
         {/* title */}
         <Title isGridComp={isGridComp} />
         {/* content */}
-        <div ref={contentRef} className={`w-full z-10 mt-8 ${isGridComp?'bg-gray-200':''}`}>
+        <div ref={contentRef} className={`w-full z-10 mt-8 ${isGridComp?'bg-light-grey':''}`}>
           {component}
         </div>
       </div>
