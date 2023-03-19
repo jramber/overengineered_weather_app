@@ -5,6 +5,8 @@ const baseUrl: string = import.meta.env.VITE_AWS_IP;
 const apiPort: string = import.meta.env.VITE_API_PORT;
 const apiUrl: string = `http://${baseUrl}:${apiPort}`;
 
+console.log(apiUrl);
+
 const Axios = axios.create({
   baseURL: apiUrl,
   withCredentials: true,
