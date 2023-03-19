@@ -6,6 +6,8 @@ import HourlyForecastContainer from './components/HourlyForecast/HourlyForecastC
 import GenericElement from './components/GenericElement/GenericElement';
 import MainWeather from './components/MainWeather/MainWeather';
 import HeaderColors from './components/HeaderColors/HeaderColors';
+import AmbientTemp from './components/AmbientTemp/AmbientTemp';
+import UVIndex from './components/UVIndex/UVIndex';
 
 // render-as-you-fetch
 const dataReq = requestWeather();
@@ -44,7 +46,9 @@ function App() {
         />
       </Suspense>
 
-      <div className="flex flex-col gap-6">
+      <div className="grid grid-rows-2 grid-cols-2 gap-4">
+        <AmbientTemp temperature={data.apparent_temperature} />
+        <UVIndex uvindex={data.uv_index_max} />
       </div>
     </div>
   );

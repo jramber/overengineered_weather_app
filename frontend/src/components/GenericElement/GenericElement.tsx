@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export default function GenericElement ({ title, component}: { title: string, component: JSX.Element}) {
+export default function GenericElement ({ title, component, isGridComp }: { title: string, component: JSX.Element, isGridComp?: boolean }) {
   // const [elementHeight, setElementHeight] = useState(0);
   // const [titleHeight, setTitleHeight] = useState(0);
 
@@ -45,15 +45,24 @@ export default function GenericElement ({ title, component}: { title: string, co
 
   */
 
+  function Title ({ isGridComp }: { isGridComp: boolean | undefined } ) {
+    if(isGridComp)
+      return (<div ref={titleRef} className="bg-gray-200 w-full absolute top-0 z-50 p-2">
+        <span className="text-gray-500">{title}</span>
+      </div>)
+    // default
+    return (<div ref={titleRef} className="w-full absolute top-0 z-50 p-2">
+      <span className="text-gray-500">{title}</span>
+    </div>)
+  }
+
   return (
     <div ref={parentElementRef} className="rounded-md relative flex flex-col justify-end">
       <div ref={elementRef} className="relative rounded-md overflow-y-hidden flex flex-col justify-end">
         {/* title */}
-        <div ref={titleRef} className="w-full absolute top-0 z-50 p-2">
-          <span className="text-gray-500">{title}</span>
-        </div>
+        <Title isGridComp={isGridComp} />
         {/* content */}
-        <div ref={contentRef} className="w-full z-10 mt-8">
+        <div ref={contentRef} className={`w-full z-10 mt-8 ${isGridComp?'bg-gray-200':''}`}>
           {component}
         </div>
       </div>
