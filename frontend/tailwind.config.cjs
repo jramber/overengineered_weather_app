@@ -15,7 +15,12 @@ module.exports = {
       },
       fontSize: {
         'superlarge': '5rem'
-      }
+      },
+      spacing: {
+        'mainTop': '-250px',
+        'secondLeft': '-150px',
+        '128': '42rem'
+      },
     },
   },
   plugins: [],

@@ -5,6 +5,7 @@ import { IWeather } from './types/types';
 import HourlyForecastContainer from './components/HourlyForecast/HourlyForecastContainer';
 import GenericElement from './components/GenericElement/GenericElement';
 import MainWeather from './components/MainWeather/MainWeather';
+import HeaderColors from './components/HeaderColors/HeaderColors';
 
 // render-as-you-fetch
 const dataReq = requestWeather();
@@ -15,6 +16,7 @@ function App() {
 
   return (
     <div className="App min-h-screen p-4 bg-gray-100 flex flex-col gap-2">
+      <HeaderColors />
       <Suspense fallback={<div>Loading</div>}>
         <MainWeather
           city={data.city}
@@ -43,10 +45,6 @@ function App() {
       </Suspense>
 
       <div className="flex flex-col gap-6">
-        <div className="bg-slate-600 w-2/4 h-32" />
-        <div className="bg-slate-600 w-2/4 h-32" />
-        <div className="bg-slate-600 w-2/4 h-32" />
-        <div className="bg-slate-600 w-2/4 h-32" />
       </div>
     </div>
   );

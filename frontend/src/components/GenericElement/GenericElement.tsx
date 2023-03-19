@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 
 export default function GenericElement ({ title, component}: { title: string, component: JSX.Element}) {
-  const [elementHeight, setElementHeight] = useState(0);
-  const [titleHeight, setTitleHeight] = useState(0);
+  // const [elementHeight, setElementHeight] = useState(0);
+  // const [titleHeight, setTitleHeight] = useState(0);
 
   const elementRef = useRef<HTMLDivElement>(null);
   const parentElementRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
+  /*
   useEffect(() => {
     if(parentElementRef.current == null) return;
     if(titleRef.current == null) return;
@@ -42,12 +43,13 @@ export default function GenericElement ({ title, component}: { title: string, co
 
   }, [elementHeight]);
 
+  */
 
   return (
     <div ref={parentElementRef} className="rounded-md relative flex flex-col justify-end">
       <div ref={elementRef} className="relative rounded-md overflow-y-hidden flex flex-col justify-end">
         {/* title */}
-        <div ref={titleRef} className="bg-gray-100 w-full absolute top-0 z-50 p-2">
+        <div ref={titleRef} className="w-full absolute top-0 z-50 p-2">
           <span className="text-gray-500">{title}</span>
         </div>
         {/* content */}

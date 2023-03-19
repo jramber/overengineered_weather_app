@@ -38,10 +38,10 @@ export interface IWeather extends ICurrentWeather {
 }
 
 export interface IMainWeather {
-  city: string,
-  temp: number,
-  max_temp: number,
-  min_temp: number,
-  weather_code: number,
-  weather_msg: string
+  city: string;
+  temp: number;
+  max_temp: number;
+  min_temp: number;
+  weather_code: number;
+  weather_msg: string;
 }
