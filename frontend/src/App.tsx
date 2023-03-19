@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { requestWeather } from './api/api.js';
 import ForecastContainer from './components/Forecast/ForecastContainer';
 import { IWeather } from './types/types';
+import HourlyForecast from './components/HourlyForecast/HourlyForecast';
 
 // render-as-you-fetch
 const dataReq = requestWeather();
@@ -17,11 +18,7 @@ function App() {
       </Suspense>*/}
       <br/>
       {/* HOURLY FORECAST */}
-      <div className="gap-2 grid grid-flow-col overflow-x-auto overscroll-x-contain">
-       <div className="bg-black w-32 h-32"></div>
-        <div className="bg-black w-32 h-32"></div>
-        <div className="bg-black w-32 h-32"></div>
-      </div>
+      <HourlyForecast />
 
       {/* DAILY FORECAST */}
       <Suspense fallback={<div>Loading</div>}>
