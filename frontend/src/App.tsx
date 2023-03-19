@@ -19,7 +19,10 @@ function App() {
   console.log(data);
 
   return (
-    <div className="App min-h-screen p-4 bg-gray-100 flex flex-col gap-2">
+    <div className="App min-h-screen p-4 bg-gray-100
+    flex flex-col gap-2
+    md:grid md:grid-rows-2 md:grid-cols-2 md:gap-8
+    ">
       <HeaderColors />
       <Suspense fallback={<div>Loading</div>}>
         <MainWeather
@@ -32,29 +35,31 @@ function App() {
         />
       </Suspense>
 
-      {/* HOURLY FORECAST */}
-      <Suspense fallback={<div>Loading</div>}>
-        <GenericElement
-          title={"Hourly forecast"}
-          component={<HourlyForecastContainer hourlyForecasts={data.hour_forecast} />}
-        />
-      </Suspense>
+      <div className="row-span-2 flex flex-col gap-2 md:gap-8">
+        {/* HOURLY FORECAST */}
+        <Suspense fallback={<div>Loading</div>}>
+          <GenericElement
+            title={"Hourly forecast"}
+            component={<HourlyForecastContainer hourlyForecasts={data.hour_forecast} />}
+          />
+        </Suspense>
 
-      {/* DAILY FORECAST */}
-      <Suspense fallback={<div>Loading</div>}>
-        <GenericElement
-          title={"Forecast (7days)"}
-          component={<ForecastContainer forecasts={data.days_forecast}/>}
-        />
-      </Suspense>
+        {/* DAILY FORECAST */}
+        <Suspense fallback={<div>Loading</div>}>
+          <GenericElement
+            title={"Forecast (7days)"}
+            component={<ForecastContainer forecasts={data.days_forecast}/>}
+          />
+        </Suspense>
+      </div>
 
       <div className="grid grid-rows-2 grid-cols-2 gap-4">
-        <AmbientTemp temperature={data.apparent_temperature} />
-        <UVIndex uvindex={data.uv_index_max} />
-        <Precipitation precipitation={data.precipitation_sum} />
-        {/*<Wind windSpeed={data.wind_speed} windDirection={data.wind_direction} />*/}
-        <Wind windSpeed={data.wind_speed} windDirection={300} />
-      </div>
+                                                       <AmbientTemp temperature={data.apparent_temperature} />
+                                                       <UVIndex uvindex={data.uv_index_max} />
+                                                       <Precipitation precipitation={data.precipitation_sum} />
+                                                       {/*<Wind windSpeed={data.wind_speed} windDirection={data.wind_direction} />*/}
+                                                       <Wind windSpeed={data.wind_speed} windDirection={300} />
+                                                       </div>
     </div>
   );
 }
