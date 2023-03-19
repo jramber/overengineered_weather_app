@@ -24,7 +24,7 @@ export default function Forecast({ date, max_temp, min_temp, weather_code}: IFor
   }, [])
 
   return(
-    <div className="grid grid-cols-weather grid-rows-1 gap-6 py-2">
+      <div className="grid grid-cols-weather grid-rows-1 gap-6 py-2">
       {weekDay}
       <div className="grid justify-center">
         {icon}
