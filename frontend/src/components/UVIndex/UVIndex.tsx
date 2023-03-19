@@ -18,7 +18,7 @@ export default function UVIndex ({ uvindex }: { uvindex: number }) {
 
   return (
     <GenericElement
-      title={"Thermal sensation"}
+      title={"UV index"}
       isGridComp={true}
       component={
         <div className="flex flex-col gap-4 p-2">

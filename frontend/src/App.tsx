@@ -8,6 +8,7 @@ import MainWeather from './components/MainWeather/MainWeather';
 import HeaderColors from './components/HeaderColors/HeaderColors';
 import AmbientTemp from './components/AmbientTemp/AmbientTemp';
 import UVIndex from './components/UVIndex/UVIndex';
+import Precipitation from './components/Precipitation/Precipitation';
 
 // render-as-you-fetch
 const dataReq = requestWeather();
@@ -49,6 +50,7 @@ function App() {
       <div className="grid grid-rows-2 grid-cols-2 gap-4">
         <AmbientTemp temperature={data.apparent_temperature} />
         <UVIndex uvindex={data.uv_index_max} />
+        <Precipitation precipitation={data.precipitation_sum} />
       </div>
     </div>
   );
