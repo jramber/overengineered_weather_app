@@ -5,6 +5,12 @@ on:
 jobs:
   build-backend:
     runs-on: self-hosted
+    env:
+      PORT: 3001
+      CERT_PATH: /etc/letsencrypt/live/
+      DOMAIN: overengineeredweatherapp.cloud/
+      CERT: fullchain.pem
+      KEY: privkey.pem
     steps:
       - uses: actions/checkout@v3
       - name: use node
@@ -15,14 +21,14 @@ jobs:
         working-directory: ./backend
         run: npm install
       - name: Create .env file
-        uses: SpicyPizza/create-envfile@v1
-        with:
-          envkey_PORT: 3001
-          envkey_CERT_PATH: /etc/letsencrypt/live/
-          envkey_DOMAIN: overengineeredweatherapp.cloud/
-          envkey_CERT: fullchain.pem
-          envkey_KEY: privkey.pem
-          directory: ./backend
+        working-directory: ./backend
+        run: |
+          touch .env
+          echo PORT=${{ secrets.PORT }} >> .env
+          echo CERT_PATH=${{ secrets.CERT_PATH }} >> .env
+          echo DOMAIN=${{ secrets.DOMAIN }} >> .env
+          echo CERT=${{ secrets.CERT }} >> .env
+          echo KEY=${{ secrets.KEY }} >> .env
       - name: build project
         working-directory: ./backend
         run: npm run build
