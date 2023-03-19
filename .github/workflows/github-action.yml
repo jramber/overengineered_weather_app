@@ -7,7 +7,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
-      - name: Remove old docker compose
-        run: sudo docker-compose down
-      - name: Build the new docker compose
-        run: sudo docker-compose build --no-cache && sudo docker-compose up -d
+      - name: start backend service
+        run: cd backend/ && sudo docker build -t backend . && sudo docker run --rm backend
+      - name: build frontend
+        run: cd ../frontend && npm run build --base /var/www/
