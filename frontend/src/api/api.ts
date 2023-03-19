@@ -56,21 +56,5 @@ export function requestWeather(): { read: () => any } {
     }).then((response) => response.data);
   });
 
-  /*
-  //.then(response => {
-    // const data: IForecastResponseElement[] = response.data;
-    // let forecast: JSX.Element[] = [];
-    // for(let i = 0; i < data.length; i++) {
-    //   forecast.push(<Forecast
-    //     key={data[i].day}
-    //     date={data[i].day}
-    //     max_temp={data[i].max_temp}
-    //     min_temp={data[i].min_temp}
-    //     weather_code={data[i].weather_code}
-    //   />)
-    // }
-    // setForecastDays(forecast);
-  //});
-   */
   return getSuspender(promise);
 }
