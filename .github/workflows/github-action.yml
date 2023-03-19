@@ -24,11 +24,11 @@ jobs:
         working-directory: ./backend
         run: |
           touch .env
-          echo PORT=${{ secrets.PORT }} >> .env
-          echo CERT_PATH=${{ secrets.CERT_PATH }} >> .env
-          echo DOMAIN=${{ secrets.DOMAIN }} >> .env
-          echo CERT=${{ secrets.CERT }} >> .env
-          echo KEY=${{ secrets.KEY }} >> .env
+          echo PORT=PORT >> .env
+          echo CERT_PATH=CERT_PATH >> .env
+          echo DOMAIN=DOMAIN >> .env
+          echo CERT=CERT >> .env
+          echo KEY=KEY >> .env
       - name: build project
         working-directory: ./backend
         run: npm run build
