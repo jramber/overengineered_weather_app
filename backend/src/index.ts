@@ -1,17 +1,23 @@
+import fs, { readFileSync } from 'fs';
+import https from 'https';
+
 import express from 'express';
-import cors from 'cors';
-import axios from 'axios';
-import * as dotenv from 'dotenv';
 const router = express.Router();
+import cors from 'cors';
+
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 import { ILocation, req_weather, request_location_info } from './weather/functions.js';
 import { IWeather, Result } from './weather/types.js';
 
-dotenv.config();
+const { PORT, CERT_PATH, DOMAIN, CERT, KEY } = process.env;
 
-const PORT = process.env.PORT;
+const certificate = readFileSync(`${CERT_PATH}${DOMAIN}${CERT}`);
+const privatekey = readFileSync(`${CERT_PATH}${DOMAIN}${KEY}`);
+const credentials = { key: privatekey, cert: certificate };
+
 const app = express()
-
 app.use(cors({
   // origin: `http://13.51.36.139/`
   origin: true,
@@ -67,6 +73,12 @@ app.get('/search', async (req, res) => {
 
 // app.use('/', router);
 
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+const httpsServer = https.createServer(credentials, app);
+
+httpsServer.listen(PORT, () => {
+  console.log(`https server running at port ${PORT}`);
 });
+
+// app.listen(PORT, () => {
+//   console.log(`Server listening on port ${PORT}`);
+// });
