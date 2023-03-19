@@ -14,7 +14,13 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
-      - name: build frontend
+      - name: use node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: install dependencies
         working-directory: ./frontend
-      - run: npm install
-      - run: npm run build --base /var/www/
+        run: npm install
+      - name: build project
+        working-directory: ./frontend
+        run: npm run build --base /var/www/
