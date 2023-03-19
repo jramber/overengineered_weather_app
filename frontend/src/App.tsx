@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { requestWeather } from './api/api.js';
 import ForecastContainer from './components/Forecast/ForecastContainer';
 import { IWeather } from './types/types';
-import HourlyForecast from './components/HourlyForecast/HourlyForecast';
+import HourlyForecastContainer from './components/HourlyForecast/HourlyForecastContainer';
 
 // render-as-you-fetch
 const dataReq = requestWeather();
@@ -18,7 +18,7 @@ function App() {
       </Suspense>*/}
       <br/>
       {/* HOURLY FORECAST */}
-      <HourlyForecast />
+      <HourlyForecastContainer hourlyForecasts={data.hour_forecast} />
 
       {/* DAILY FORECAST */}
       <Suspense fallback={<div>Loading</div>}>

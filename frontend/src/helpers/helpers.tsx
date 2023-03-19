@@ -3,11 +3,11 @@ import PartlyCloudIcon from '../components/Icons/PartlyCloudyIcon';
 import RainIcon from '../components/Icons/RainIcon';
 import CloudIcon from '../components/Icons/CloudIcon';
 
-export const getWeatherIcon = (iconCode: number): JSX.Element => {
-  if (iconCode == 0) return <SunIcon size={20} color={"black"} />
-  if (iconCode == 1 || iconCode == 2) return <PartlyCloudIcon size={20} color={"black"} />
-  if (iconCode >= 3 && iconCode < 55) return <CloudIcon size={20} color={"black"} />
-  if (iconCode >= 55) return <RainIcon size={20} color={"black"} />
+export const getWeatherIcon = (weatherCode: number): JSX.Element => {
+  if (weatherCode == 0) return <SunIcon size={20} color={"black"} />
+  if (weatherCode == 1 || weatherCode == 2) return <PartlyCloudIcon size={20} color={"black"} />
+  if (weatherCode >= 3 && weatherCode < 55) return <CloudIcon size={20} color={"black"} />
+  if (weatherCode >= 55) return <RainIcon size={20} color={"black"} />
   return <div />
 }
 
