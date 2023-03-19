@@ -16,13 +16,13 @@ jobs:
         run: npm install
       - name: Create .env file
         uses: SpicyPizza/create-envfile@v1
-        working-directory: ./backend
         with:
           envkey_PORT: 3001
           envkey_CERT_PATH: /etc/letsencrypt/live/
           envkey_DOMAIN: overengineeredweatherapp.cloud/
           envkey_CERT: fullchain.pem
           envkey_KEY: privkey.pem
+          directory: ./backend
       - name: build project
         working-directory: ./backend
         run: npm run build
