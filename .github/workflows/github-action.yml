@@ -24,7 +24,7 @@ jobs:
         working-directory: ./backend
         run: |
           touch .env
-          echo PORT=${{ evn.PORT }} >> .env
+          echo PORT=${{ env.PORT }} >> .env
           echo CERT_PATH=CERT_PATH >> .env
           echo DOMAIN=DOMAIN >> .env
           echo CERT=CERT >> .env
