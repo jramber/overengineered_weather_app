@@ -14,6 +14,8 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
-      - name: build frontend
         working-directory: ./frontend
+      - name: install dependencies
+        run: npm run i
+      - name: build frontend
         run: npm run build --base /var/www/
