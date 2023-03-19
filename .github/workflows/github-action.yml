@@ -34,7 +34,7 @@ jobs:
         run: npm run build
       - name: start backend service
         working-directory: ./backend
-        run: npm run start
+        run: pm2 --name backend start npm -- start
   build-frontend:
     runs-on: self-hosted
     env:
