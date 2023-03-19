@@ -23,4 +23,7 @@ jobs:
         run: npm install
       - name: build project
         working-directory: ./frontend
-        run: npm run build --base /var/www/
+        run: npm run build
+      - name: copy project to www
+        working-directory: ./frontend
+        run: sudo cp -rv dist/ /var/www/
