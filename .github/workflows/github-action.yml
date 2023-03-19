@@ -5,11 +5,27 @@ on:
 jobs:
   build-backend:
     runs-on: self-hosted
+    env:
+      PORT: 3001
+      CERT_PATH: /etc/letsencrypt/live/
+      DOMAIN: overengineeredweatherapp.cloud/
+      CERT: fullchain.pem
+      KEY: privkey.pem
     steps:
       - uses: actions/checkout@v3
+      - name: use node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: install dependencies
+        working-directory: ./backend
+        run: npm install
+      - name: build project
+        working-directory: ./backend
+        run: npm run build
       - name: start backend service
         working-directory: ./backend
-        run: sudo docker build -t backend . && sudo docker run --rm -d backend
+        run: npm run start
   build-frontend:
     runs-on: self-hosted
     env:
