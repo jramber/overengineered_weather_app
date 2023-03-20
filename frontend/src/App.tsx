@@ -53,12 +53,11 @@ function App() {
       </div>
 
       <div className="grid grid-rows-2 grid-cols-2 gap-4">
-                                                       <AmbientTemp temperature={data.apparent_temperature} />
-                                                       <UVIndex uvindex={data.uv_index_max} />
-                                                       <Precipitation precipitation={data.precipitation_sum} />
-                                                       {/*<Wind windSpeed={data.wind_speed} windDirection={data.wind_direction} />*/}
-                                                       <Wind windSpeed={data.wind_speed} windDirection={300} />
-                                                       </div>
+        <AmbientTemp temperature={data.apparent_temperature} />
+        <UVIndex uvindex={data.uv_index_max} />
+        <Precipitation precipitation={data.precipitation_sum} />
+        <Wind windSpeed={data.wind_speed} windDirection={data.wind_direction} />
+      </div>
     </div>
   );
 }

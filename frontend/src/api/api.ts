@@ -3,7 +3,9 @@ import { getSuspender } from './suspender';
 
 const baseUrl: string | undefined = process.env.VITE_AWS_IP;
 const apiPort: string | undefined = process.env.VITE_API_PORT;
-const apiUrl: string = `https://${baseUrl}:${apiPort}`;
+let apiUrl: string | undefined;
+if (baseUrl === undefined || apiPort === undefined) apiUrl = undefined;
+else apiUrl = `https://${baseUrl}:${apiPort}`;
 
 const Axios = axios.create({
   baseURL: apiUrl,
