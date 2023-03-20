@@ -19,13 +19,12 @@ const credentials = { key: privatekey, cert: certificate };
 
 const app = express()
 app.use(cors({
-  // origin: `http://13.51.36.139/`
   origin: true,
   methods: ['GET', 'POST', 'HEAD', 'OPTIONS', 'PUT', 'PATCH'],
   credentials: true
 }));
 
-app.get('/', async (req, res) => {
+router.get('/', async (req, res) => {
   // check if the request has the required parameters
   if(!req.query.hasOwnProperty('lat') || !req.query.hasOwnProperty('lon')) {
     res.status(400);
@@ -45,6 +44,7 @@ app.get('/', async (req, res) => {
   res.end(JSON.stringify(weatherResult.data));
 });
 
+// Warning! This endpoint is not used.
 app.get('/search', async (req, res) => {
   if(!req.query.hasOwnProperty('q')){
     res.status(400);
@@ -59,7 +59,8 @@ app.get('/search', async (req, res) => {
     res.send('Incorrect query parameter');
     return;
   }
-  // request location's information -> name, country
+
+  // request location's information -> (name, country, lat, lon)[]
   const locations: Result<ILocation[], string> = await request_location_info(query);
   if(locations.ok == false){
     res.status(400);
@@ -71,14 +72,9 @@ app.get('/search', async (req, res) => {
   res.end(JSON.stringify(locations.data));
 })
 
-// app.use('/', router);
+app.use('/', router);
 
 const httpsServer = https.createServer(credentials, app);
-
 httpsServer.listen(PORT, () => {
-  console.log(`https server running at port ${PORT}`);
+  console.log(`Https server running at port ${PORT}`);
 });
-
-// app.listen(PORT, () => {
-//   console.log(`Server listening on port ${PORT}`);
-// });

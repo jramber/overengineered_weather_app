@@ -5,7 +5,7 @@ import {
   Err,
   IForecastRes,
   IForecast,
-  IHourlyForecast, IHourlyForecastRes, IWeather, ICurrentWeatherReq, ICurrentWeather,
+  IHourlyForecast, IHourlyForecastRes, IWeather, ICurrentWeatherReq, ICurrentWeather, ILocation, ILocationRes,
 } from './types.js';
 import { weatherCodes } from './weatherCodes.js';
 
@@ -15,6 +15,10 @@ const Axios = axios.create({
 
 const AxiosCity = axios.create({
   baseURL: 'https://api.bigdatacloud.net'
+});
+
+const AxiosLocation = axios.create({
+  baseURL: 'https://geocoding-api.open-meteo.com/v1'
 });
 
 export const request_city_name = async (latitude:  string, longitude: string): Promise<Result<string, string>> => {
@@ -27,7 +31,6 @@ export const request_city_name = async (latitude:  string, longitude: string): P
       localityLanguage: 'en'
     }
   }).then(response => {
-    // const data = response.data;
     city = response.data.city;
   }).catch(error => {
     if (error.response) {
@@ -82,8 +85,18 @@ export const request_current_weather = async (latitude: string, longitude: strin
     }
   }).then( response => {
     weather = createWeatherObj(response.data);
+  }).catch(error => {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log('Error', error.message);
+    }
+    console.log(error.config);
   });
-  // add catch case
 
   if(weather === undefined)
     return Err('Bad request');
@@ -117,6 +130,17 @@ export const request_forecast = async (latitude: string, longitude: string): Pro
         data.daily.weathercode[i],
       ))
     }
+  }).catch(error => {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log('Error', error.message);
+    }
+    console.log(error.config);
   });
 
   if(forecast.length == 0)
@@ -158,18 +182,12 @@ export const request_hourly_forecast = async (latitude: string, longitude: strin
     }
   }).catch(error => {
     if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
       console.log(error.response.data);
       console.log(error.response.status);
       console.log(error.response.headers);
     } else if (error.request) {
-      // The request was made but no response was received
-      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-      // http.ClientRequest in node.js
       console.log(error.request);
     } else {
-      // Something happened in setting up the request that triggered an Error
       console.log('Error', error.message);
     }
     console.log(error.config);
@@ -187,7 +205,7 @@ export const req_weather = async (latitude: string, longitude: string): Promise<
     return Err(cityNameResult.err)
   const city_name = cityNameResult.data;
 
-  // request current information about the current weather
+  // request information about the current weather
   const currentWeatherResult: Result<ICurrentWeather, string> = await request_current_weather(latitude, longitude);
   if(currentWeatherResult.ok == false)
     return Err(currentWeatherResult.err)
@@ -211,43 +229,6 @@ export const req_weather = async (latitude: string, longitude: string): Promise<
     hour_forecast: hourly_forecast,
     days_forecast: forecast
   });
-}
-
-
-// location api
-const AxiosLocation = axios.create({
-  baseURL: 'https://geocoding-api.open-meteo.com/v1'
-});
-
-export interface ILocationRes {
-  results?: {
-    id: number,
-    name: string,
-    latitude: number,
-    longitude: number,
-    elevation: number,
-    feature_code: string,
-    country_code: string,
-    admin1_id: number,
-    admin2_id: number,
-    admin3_id: number,
-    timezone: string,
-    population: number,
-    postcodes: string[],
-    country_id: number,
-    country: string,
-    admin1: string,
-    admin2: string,
-    admin3: string
-  }[],
-  generationtime_ms: number
-}
-
-export interface ILocation {
-  name: string,
-  country: string
-  latitude: number,
-  longitude: number
 }
 
 const createLocationObj = (name: string, country: string, latitude: number, longitude: number):ILocation => ({
@@ -280,8 +261,18 @@ export const request_location_info = async (query: string): Promise<Result<ILoca
         data.results[i].longitude
       ));
     }
-  });
-  // add catch
+  }).catch(error => {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log('Error', error.message);
+    }
+    console.log(error.config);
+  });;
 
   if(err !== undefined)     return Err(err);
   if(locations.length == 0) return Err('No results for the provided location');

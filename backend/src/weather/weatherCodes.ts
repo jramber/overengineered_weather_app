@@ -26,7 +26,3 @@ export const weatherCodes: Map<number, string>= new Map([
   [96, "Thunderstorm with slight"],
   [99, "Heavy hail"]
 ]);
-
-// const getWeatherMsg = code => weatherCodes.get(code);
-//
-// module.exports = { getWeatherMsg }

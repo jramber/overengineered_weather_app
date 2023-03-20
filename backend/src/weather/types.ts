@@ -1,12 +1,9 @@
+/* TYPE SAFE ERROR HANDLING */
 export type Result<T, E = undefined> =
   { ok: true, data: T}
   | { ok: false, err: E | undefined };
 export const Ok = <T>(data: T): Result<T, never> => ({ ok: true, data})
 export const Err = <E>(err?: E): Result<never, E> => ({ ok: false, err })
-
-// export type Result<Ok, Err> =
-//     { result: 'ok',   data: Ok }
-//   | { result: 'err', data: Err }
 
 export interface IWeatherResponse {
   weather_message: string,
@@ -130,3 +127,33 @@ export interface IWeather extends ICurrentWeather {
   days_forecast: IForecast[]
 }
 
+export interface ILocationRes {
+  results?: {
+    id: number,
+    name: string,
+    latitude: number,
+    longitude: number,
+    elevation: number,
+    feature_code: string,
+    country_code: string,
+    admin1_id: number,
+    admin2_id: number,
+    admin3_id: number,
+    timezone: string,
+    population: number,
+    postcodes: string[],
+    country_id: number,
+    country: string,
+    admin1: string,
+    admin2: string,
+    admin3: string
+  }[],
+  generationtime_ms: number
+}
+
+export interface ILocation {
+  name: string,
+  country: string
+  latitude: number,
+  longitude: number
+}
