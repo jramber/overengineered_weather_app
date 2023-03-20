@@ -86,36 +86,3 @@ tools like Prettier, ESlint, Husky and Conventional Commits,
 are used.
 
 ## Local deployment 👨‍💻
-
-## Todos 📝
-
-- [x] Hooks
-  - [x] Husky
-  - [x] Prettier
-  - [x] ESLint
-  - [x] Test
-- [ ] Deployment
-  - [x] Docker
-  - [x] Docker Compose
-  - [ ] Github CI/CD
-  - [ ] AWS
-- [ ] Front-end
-  - [x] App
-  - [ ] Figma Mocks
-  - [ ] Figma Design
-  - [ ] Include Tailwind
-  - [ ] Dark Mode
-  - [ ] Back-end communication
-- [ ] Back-end
-  - [x] Server
-  - [ ] API integration
-- [ ] Testing
-  - [ ] React testing library
-  - [ ] Jest
-  - [ ] Unit tests
-  - [ ] Integration tests
-  - [ ] Mock-up
-- [ ] Architecture
-  - [ ] TDD
-  - [ ] DDD
-

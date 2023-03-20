@@ -16,7 +16,6 @@ const dataReq = requestWeather();
 
 function App() {
   const data: IWeather = dataReq.read();
-  console.log(data);
 
   return (
     <div className="App min-h-screen p-4 bg-gray-100
