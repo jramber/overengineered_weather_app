@@ -142,11 +142,6 @@ npm i -g typescript
 cd /your/desired/path
 ```
 
-3. Install the dependencies
-```bash
-npm install
-```
-
 ### Start front-end service
 Open another terminal to start the front-end service.
 In the new terminal cd into the `frontend/` folder which is inside the project's root folder.
@@ -156,7 +151,24 @@ In the new terminal cd into the `frontend/` folder which is inside the project's
 cd frontend/
 ```
 
-2. Start local development
+2. Create a `.env` file
+```bash
+touch .env
+```
+
+3. Write the following variables into the file
+```dotenv
+VITE_PORT=8080
+VITE_API_PORT=3001
+VITE_AWS_IP=localhost
+```
+
+4. Install the dependencies
+```bash
+npm install
+```
+
+5. Start local development
 ```bash
 npm run dev
 ```
@@ -165,17 +177,52 @@ npm run dev
 Open another terminal to start the backend-end service.
 In the new terminal cd into the `backend/` folder which is inside the project's root folder.
 
-1.  Enter the backend's folder.
+In order to create the backend service, it is required to create a self-signed SSL cert, for local development.
+
+1. Go to the folder where you want to save the ssl certificate.
+```bash
+cd /your/path/to/the/ssl/certificate/
+```
+
+3. Create the SSL certificate
+```bash
+openssl req -x509 -out localhost.crt -keyout localhost.key   -newkey rsa:2048 -nodes -sha256   -subj '/CN=localhost' -extensions EXT -config <(printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
+```
+
+4.  Now with the certificate created, go back to the project folder
+```bash
+cd /your/desired/path
+```
+
+5. Enter the backend's folder
 ```bash
 cd backend/
 ```
 
-2. Compile the project
+6. Create a `.env` file
+```bash
+touch .env
+```
+
+7. Write the following variables into the file
+```dotenv
+PORT=3001
+DOMAIN=
+CERT_PATH=/your/path/to/the/ssl/certificate/
+CERT=localhost.crt
+KEY=localhost.key
+```
+8. Install the dependencies
+```bash
+npm install
+```
+
+9. Compile the project
 ```bash
 npm run build
 ```
 
-3. Run the development server
+10. Run the development server
 ```bash
 npm run start
 ```

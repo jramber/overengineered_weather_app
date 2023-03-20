@@ -5,7 +5,6 @@ import ArrowIcon from '../Icons/ArrowIcon';
 export default function Wind ({ windSpeed, windDirection}: { windSpeed: number, windDirection: number }) {
 
   function Direction ({ wind_direction }: { wind_direction: number }) {
-    console.log(wind_direction);
     let rotateClass = 'rotate-0';
 
     if (wind_direction <= 22.5  || wind_direction > 337.5) rotateClass = 'rotate-90';
