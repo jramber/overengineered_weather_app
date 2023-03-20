@@ -8,8 +8,8 @@ import cors from 'cors';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import { ILocation, req_weather, request_location_info } from './weather/functions.js';
-import { IWeather, Result } from './weather/types.js';
+import { req_weather, request_location_info } from './weather/functions.js';
+import { ILocation, IWeather, Result } from './weather/types.js';
 
 const { PORT, CERT_PATH, DOMAIN, CERT, KEY } = process.env;
 
